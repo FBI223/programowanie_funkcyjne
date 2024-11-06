@@ -1,0 +1,260 @@
+-- save as HaskellCheatsheet.hs
+module HaskellCheatsheet where
+-- On Windows, I sometimes have to remove the module line above
+-- in order to get GHC to compile the file as an executable instead
+-- of a library.
+
+
+-- Single line comment
+
+{- 
+    Block
+    Comment
+-}
+
+-- imports must come before anything else in a module
+
+-- For now just reference https://wiki.haskell.org/Import if you need imports.
+
+-- value definition
+
+-- type signature
+ex :: Int
+-- value definition
+ex = 2
+
+--function signature
+f :: Int -> Int -> Bool
+--function definition
+f x y = x < y + 1
+        -- if expression
+
+-- where
+f2 :: Int -> Bool
+f2 x = x * x' < x
+    where x' = 2 * x + 1
+
+-- multiline where
+f3 :: Int -> Bool
+f3 x = result
+    where
+        result = x * x' < x
+
+        x' :: Int
+        x' = 2 * x + 1
+
+-- Parametric Polymorphism
+-- If expression
+ifLike :: a -> a -> Bool -> a
+ifLike x y cond = if cond
+                    then x
+                    else y
+
+-- Ad-hoc polymorphism with typeclass constraints
+biggerAndText :: (Ord a, Show a) => a -> a -> (String, a)
+biggerAndText x y = (show big, big)
+    where big = if x >= y then x else y
+
+-- data type definition
+data TypeName = ConstructorName Int Bool
+    deriving (Show, Eq)
+
+-- data type with multiple Constructors
+data Choices = 
+    Choice1 Int
+  | Choice2 Bool
+  | Choice3 [Double]
+
+-- Typeclass definitions
+class Why a where
+    -- Declare the functions of the typeclass
+    makeInt :: a -> Int
+
+    -- You can specify a default implementation like so
+    makeFloat :: a -> Float
+    makeFloat x = fromIntegral (makeInt x)
+
+-- Subtyping a Typeclass
+-- This means that if a is a SumThing then it must also be in Show and in Num.
+class (Show a, Num a) => SumThing a where
+    showSum :: a -> a -> String
+    showSum x y = show (x + y)
+
+-- Making an instance
+
+instance Why TypeName where
+    -- Don't put a type signature here without enabling InstanceSigs
+    -- makeInt :: TypeName -> Int 
+    makeInt _ = 55
+
+instance Why Int where
+        makeInt x = x
+
+        -- Can optionally fill in these extra functions.
+        makeFloat x = fromIntegral (x + 1)
+
+-- If you aren't going to define anything other than the default you
+-- can leave out the where
+instance SumThing Int
+
+
+-- Let expression
+g :: Int -> Int
+g x = let t = x + 1 in x * t
+
+
+-- Multiline Let expression
+g2 :: Int -> Int
+g2 x = let
+        t = x + 1 
+        h = t * x
+        z = h + 2 * t
+            -- Note the order of definitions doesn't matter to Haskell.
+        in z + h + t + x
+
+-- Do notation
+somethingWierd :: [a] -> [[a]]
+somethingWierd xs = do
+    -- Get an x of type a from (Monad a) (in this case [a])
+    x <- xs
+    -- Create a pure value in the do block
+    let pureValue = (x, (x, 1))
+    y <- reverse xs
+    return $ x : y : xs
+    where thisIsStillDoableInAFunction = True
+
+-- lambda expressions
+add2 :: Int -> Int
+add2 = \x -> x + 2
+
+
+addMult :: Int -> Int -> Int
+addMult = \x y -> x + x * y
+
+
+-- infix partial application (Normally referred to as operator sections)
+divListBy2 :: [Double] -> [Double]
+divListBy2 xs = map (/ 2) xs
+    -- Same as map (\x -> x / 2) xs
+-- WARNING: (- 2) isn't the same as \x -> x - 2 instead it is the same as (negate 2)
+-- What you want is (subtract 2).
+
+
+div2ByList :: [Double] -> [Double]
+div2ByList xs = map (2 /) xs
+    -- Same as map (\x -> 2 / x) xs
+
+--infix normal functions
+isEven :: Int -> Bool
+isEven x = x `mod` 2 == 0
+    -- Same as mod x 2 == 0
+
+
+--infix normal functions trick.
+mapZ10 :: [Int] -> [Int]
+mapZ10 xs = map (`mod` 10) xs
+-- Otherwise must be written as map (\x -> x `mod` 10) xs
+
+-- Guards
+maxProd :: Int -> Int -> Int -> Int
+maxProd a b c
+    | a > b     = prod1
+    | a < b     = prod2
+    | otherwise = 0 -- otherwise is just another name for True
+--  | Bool expression = return value
+    where 
+        prod1 = a * c
+        prod2 = b * c
+
+-- Case expressions
+caseEx :: Choices -> Choices
+caseEx x = 
+    case x of
+        Choice1 a  -> Choice1 (2 * a)
+        Choice2 b  -> Choice2 (not b)
+        Choice3 cs -> Choice3 cs
+        --pattern  -> result
+
+    
+-- Function level pattern matching
+-- caseEx can be written as
+caseEx' :: Choices -> Choices
+caseEx' (Choice1 a)  = Choice1 (2 * a)
+caseEx' (Choice2 b)  = Choice2 (not b)
+caseEx' (Choice3 cs) = Choice3 cs
+    
+
+-- List comprehension
+pythagoreanTriangles :: Int -> [(Int, Int, Int)]
+pythagoreanTriangles n = [(a, b, c) | c <- [1..n], let bIsLessrOrEqualToMe = c, -- showing that you can bind to variables here
+    b <- [1..bIsLessrOrEqualToMe], a <- [1..b], -- Whitespace is unnecessary.
+    a^2 + b^2 == c^2] -- filtering out invalid results.
+      
+
+
+-- New infix operators must be made of symbols. I normally see these defined in prefix form. 
+-- Achieved by partial application where the operator is left on its own.
+(^!) :: Integer -> Integer -> Integer
+(^!) base 0 = 1
+(^!) base power
+    | power `mod` 2 == 0 = (^!) (base ^ 2) (power `div` 2)
+    | otherwise          = base * (^!) base (power - 1)
+
+-- Defining how strongly (^!) binds and if it is left or right associative.
+-- This is called operator precedence
+
+-- This is right associative a ^! b ^! c = a ^! (b ^! c)
+infixr 8 ^!
+-- Same as (^), you can check this by loading the operator in GHCi and typing
+-- "GHCI>" is the provided prompt
+-- GHCI>:info (^)
+
+-- The higher the number, the tighter it binds. Ex, (+) has precedence 6 and (*) has precedence 7
+-- So a + b * c is a + (b * c)
+
+--infixl 8 ^! would make it left associative a ^! b ^! c = (a ^! b) ^! c
+
+--infix 8 ^! Says there is no associativity and "a ^! b ^! c" is a parse error.
+
+-- You can also do this for `mod` style functions.
+infixr 3 `addMult`
+
+-- Typeclass constraints for polymorphic datatypes.
+data Two a = Two a a
+
+instance Show a => Show (Two a) where
+    show (Two x y) = "Two " ++ show x ++ ", " ++ show y
+
+multilineString = "Hello\
+                  \ World!"
+-- = to "Hello World!"
+
+-- Pattern matching with guards
+data ListCategory =
+    StartsWithTwoSame
+  | IsTwoOrLonger
+  | IsLengthOneAndXIsEven
+  | IsLengthOneAndXIsOdd
+  | IsEmpty
+
+-- Inline guard to go to next pattern if the guard fails
+-- The option used for even below can also be used
+findCategory (x:y:_) | x == y = StartsWithTwoSame
+findCategory (_:_:_) = IsTwoOrLonger
+-- Non-inline guard to try a couple options with the same pattern.
+findCategory [x]
+    | even x    = IsLengthOneAndXIsEven
+    | otherwise = IsLengthOneAndXIsOdd
+findCategory [] = IsEmpty
+
+
+-- Warning
+-- This won't terminate because (Use 1) uses (Def 2), recursively,
+-- instead of using (Def 1) like one might expect
+broken = 
+    let {-Def 1-} x = 2 in
+    let {-Def 2-} x = {-Use 1-} x + 1 in {-Use 2-} x
+
+
+-- Recursive binding with let
+fibOneHundred = let fibs = 1:1:zipWith (+) fibs (tail fibs) in fibs !! 100
