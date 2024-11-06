@@ -1,6 +1,9 @@
 
 eratosthenes :: Int -> [Int]
-eratosthenes n = sitoRek [2..n]
+eratosthenes n
+    | n < 2 = []
+    | n == 2 = [2]
+    | n > 2 = sitoRek [2..n]
 
 
 
@@ -9,6 +12,7 @@ sitoRek  [] = []
 sitoRek  (x:xs) -- nasz kazdy x jest liczba pierwsza bo juz kilka razy filtrowalismy od 2 do x-1 i nasz x dalej jest w liscie czyli jest liczba pierwsza
     | x * x > (last xs) = x : xs  -- jesli po filtrowaniu doszlismy do konca to po prostu doklejasz x do koncowej listy i konczysz
     | otherwise = x : sitoRek (filtruj x xs) -- usuwanie wszystkich wielokrotnosci x z listy koncowej
+-- last xs bierze aktualnie najwyzsza wartosc listy , ( moze byc ale nie musi liczba pierwsza )
 
 
 filtruj :: Int -> [Int] -> [Int]
