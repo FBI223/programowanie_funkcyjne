@@ -10,7 +10,15 @@ kuick_sort (x:xs) = kuick_sort less ++ [x] ++ kuick_sort eq_greater
 
 
 
-
+quicksorts :: (Ord a) => [a] -> [a]
+quicksorts [] = []
+quicksorts xs = quicksorts less ++ [pivot] ++ quicksorts greater
+    where
+        mid = length xs `div` 2
+        pivot = xs !! mid
+        rest = take mid xs ++ drop (mid + 1) xs
+        less = filter (< pivot) rest
+        greater = filter (>= pivot) rest
 
 
 
