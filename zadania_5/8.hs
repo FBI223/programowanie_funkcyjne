@@ -35,3 +35,24 @@ filtruj n arr = filter (\x->x `mod` n /= 0) arr
 
 
 
+
+
+
+
+
+dzielniki :: Int -> [Int]
+dzielniki n = [x | x <- [2..n-1], n `mod` x == 0] 
+
+sumuj_liste :: [Int] -> Int
+sumuj_liste [] = 0
+sumuj_liste (x:[]) = x
+sumuj_liste (x:xs) = x + sumuj_liste xs
+
+czyPierwsza :: Int -> Bool
+czyPierwsza n = sumuj_liste (dzielniki n) == 0 
+
+
+sitko :: Int -> [Int]
+sitko n = [x | x <- [2..n] , czyPierwsza x == True  ]
+
+

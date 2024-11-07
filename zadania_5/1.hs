@@ -1,15 +1,18 @@
 
-onlyUppercase :: String -> String
-onlyUppercase [] = []  -- przypadek bazowy: pusta lista zwraca pustą listę
-onlyUppercase (x:xs)
-    | x >= 'A' && x <= 'Z' = x : onlyUppercase xs  -- jeśli x jest dużą literą, dodaj go do wyniku
-    | otherwise            = onlyUppercase xs      -- w przeciwnym razie pomiń ten znak
+onlySmall :: String -> String
+onlySmall [] = []  -- przypadek bazowy: pusta lista zwraca pustą listę
+onlySmall (x:xs)
+    | x >= 'a' && x <= 'z' = x : onlySmall xs  -- jeśli x jest mala literą, dodaj go do wyniku
+    | otherwise            =     onlySmall xs      -- w przeciwnym razie pomiń ten znak
 
 
 
-wielkieLitery :: [String] -> [String]
-wielkieLitery [] = []
-wielkieLitery lista = map onlyUppercase lista -- filtrujemy za pomoca funkcji wyzej zdefiniowana
+maleLitery :: [String] -> [String]
+maleLitery [] = []
+maleLitery lista = map onlySmall lista -- filtrujemy za pomoca funkcji wyzej zdefiniowana
                                                 -- oraz za pomoca map
 
+
+maleLiteryy :: [String] -> [String]
+maleLiteryy lista = map (\x -> filter (`elem` ['a'..'z']) x) lista
 

@@ -9,18 +9,33 @@ czy_takie_same (x:xs) (y:ys)
     | otherwise = False                 -- znaki różnią się, więc napisy są różne
 
 
-czy_palindrom :: String -> Bool
-czy_palindrom [] = False
-czy_palindrom s_in = czy_takie_same s_in ( reverse s_in ) -- czy palindrom to wynik funkcji ktora porownuje 
+--czy_palindrom :: String -> Bool
+--czy_palindrom [] = False
+--czy_palindrom s_in = czy_takie_same s_in ( reverse s_in ) -- czy palindrom to wynik funkcji ktora porownuje 
                                                                 -- czy odwrocony string rowna sie zwykly string
 
---zwroc_palindromy :: [String] -> [String]
---zwroc_palindromy [] = []
---zwroc_palindromy lista = filter czy_palindrom lista
+
+czy_palindrom :: String -> Bool
+czy_palindrom [] = False
+czy_palindrom s_in = s_in == ( reverse s_in ) 
+
 
 dlugoscPalindromow :: [String] -> Int
 dlugoscPalindromow lista = sum (map length (filter czy_palindrom lista)) -- filtrujemy liste zeby byly palondromy tylko
                                                                         -- mapujemy ( przypisujemy ) elementom listy ich dligosci i na koniec zliczamy sume
+
+zwroc_palindromy :: [String] -> [String]
+zwroc_palindromy [] = []
+zwroc_palindromy lista = filter czy_palindrom lista
+
+
+
+
+
+
+
+
+
 
 
 

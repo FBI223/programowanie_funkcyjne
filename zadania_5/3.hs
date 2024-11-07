@@ -1,5 +1,6 @@
 -- take 10 fibSequence 
 -- take 30 fibSequence 
+-- take 10 ( fib (1,1) )
 
 next_fibbo :: (Integer,Integer) -> (Integer,Integer)
 next_fibbo (x, y) = (y, x + y)

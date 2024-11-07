@@ -8,7 +8,7 @@ kuick_sort (x:xs) = kuick_sort less ++ [x] ++ kuick_sort eq_greater
     less = takeWhile (< x) xs
     eq_greater = dropWhile (< x) xs
 
--- x to
+
 
 
 
