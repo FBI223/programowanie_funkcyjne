@@ -7,10 +7,8 @@ sito :: Int -> [Int] -> [Int]
 sito n  [] = []
 sito n (x:xs) -- nasz kazdy x jest liczba pierwsza bo juz kilka razy filtrowalismy od 2 do x-1 i nasz x dalej jest w liscie czyli jest liczba pierwsza
     | x * x > n = x : xs  -- jesli po filtrowaniu doszlismy do konca to po prostu doklejasz x do koncowej listy i konczysz
-    | otherwise = x : sito n (filtruj x xs) -- usuwanie wszystkich wielokrotnosci x z listy koncowej
+    | otherwise = x : sito n (filter (\y->y `mod` x /= 0) xs) -- usuwanie wszystkich wielokrotnosci x z listy koncowej
 -- last xs bierze aktualnie najwyzsza wartosc listy , ( moze byc ale nie musi liczba pierwsza )
-
-
 
 
 
@@ -29,8 +27,6 @@ sitoRek  (x:xs) -- nasz kazdy x jest liczba pierwsza bo juz kilka razy filtrowal
 -- last xs bierze aktualnie najwyzsza wartosc listy , ( moze byc ale nie musi liczba pierwsza )
 
 
-filtruj :: Int -> [Int] -> [Int]
-filtruj n arr = filter (\x->x `mod` n /= 0) arr
 
 
 
