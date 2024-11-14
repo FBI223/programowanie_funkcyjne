@@ -6,6 +6,11 @@
 -- doDziesietnego 16 [15,15] 
 
 
+
+doDziesietnego2 :: Int -> [Int] -> Int
+doDziesietnego2 base arr = foldl (\x y -> x * base + y) 0 arr
+
+
 doDziesietnego :: Int -> [Int] -> Int
 doDziesietnego base arr = foldr (+) 0 (zipWith (\x y -> x * (base ^ y)) arr positions )
     where positions = reverse [0 .. length arr - 1]
