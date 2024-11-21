@@ -18,7 +18,6 @@ instance Num GaussNumber where
     (GaussNumber a b) * (GaussNumber c d) = GaussNumber (a * c - b * d) (a * d + b * c)
     negate (GaussNumber a b) = GaussNumber (-a) (-b)
     abs gaus = gaus
-    --abs (GaussNumber a b) = GaussNumber (sqrt' (a * a + b * b)) ( 0 )
     signum gaus = GaussNumber 1 0
     fromInteger n = GaussNumber (fromInteger n) 0
     

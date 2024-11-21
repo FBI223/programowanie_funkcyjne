@@ -17,6 +17,10 @@ treeToListPostOrder (Node val left right) = treeToListPostOrder left ++ treeToLi
 drzewo :: Tree Int
 drzewo = Node 10 (Node 4 (Node 2 Empty Empty) Empty) (Node 16 Empty (Node 14 Empty Empty))
 
+drzewo2 :: Tree Int
+drzewo2 = Node 10 (Node 4 Empty Empty) (Node 16 Empty Empty )
+
+
 -- treeToListPreOrder drzewo 
 -- treeToListInOrder drzewo
 -- treeToListPostOrder drzewo
