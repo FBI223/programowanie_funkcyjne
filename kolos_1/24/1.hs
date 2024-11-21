@@ -47,7 +47,5 @@ sprawdz s_in = 2*a == b + c
 
 generuj :: Int -> [String]
 generuj 0 = []
-generuj n = filter sprawdz ( slowaDlugosci 'a' 'b' 'c' (3* FromIntegral n) )
-
-
+generuj n = filter sprawdz ( slowaDlugosci 'a' 'b' 'c' (3* n) )
 
