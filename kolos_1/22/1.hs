@@ -1,14 +1,12 @@
 type DirectedGraph = ([Int], Int -> Int -> Bool)
 
 
-
-
 atDistance :: DirectedGraph -> Int -> Int -> [Int]
 atDistance dg 0 v = [v]
 atDistance (vertices, function) d v = paths
   where
     reachableVertices = filter (\w -> function v w) vertices -- sasiednie wierzcholki
-    paths_separated = map (\w -> atDistance (vertices, function) (d - 1) w) reachableVertices -- dla kazdego sasiedniego wierzcholka szukamy w indektyczny sposob listy wierzcholkow ktore sa osiagalne z danego wierzcholka z droga d-1
+    paths_separated = map (\w -> atDistance (vertices, function) (d - 1) w) reachableVertices 
     paths = concat paths_separated
 
 
