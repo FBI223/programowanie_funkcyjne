@@ -1,13 +1,11 @@
 
 wIluListachWystapienia :: Int -> [[Int]] -> [[Int]]
-wIluListachWystapienia _ [] = []
-wIluListachWystapienia n lista_list = map (\lista -> map (\x -> if elem x lista then 1 else 0) n_lista) lista_list
-  where
-    n_lista = [1..n]
+wIluListachWystapienia _ [[]] = [[]]
+wIluListachWystapienia n lista_list = map (\lista -> map (\x -> if elem x lista then 1 else 0) [1..n]) lista_list
 
 
 wIluListach :: Int -> [[Int]] -> [Int]
-wIluListach _ [] = []
+wIluListach _ [[]] = []
 wIluListach n lista_list = foldl  (zipWith (+) ) (replicate n 0) ( wIluListachWystapienia n lista_list )
 
 
