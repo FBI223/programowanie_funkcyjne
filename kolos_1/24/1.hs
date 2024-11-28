@@ -9,10 +9,6 @@ dodajZnaki a b c (x:xs) =  ( x ++ [a] ) : ( x ++ [b] ) : ( x ++ [c] ) : dodajZna
 
 
 
-
-
-
-
 czy_a :: Char -> Int
 czy_a x 
     | x == 'a' = 1
