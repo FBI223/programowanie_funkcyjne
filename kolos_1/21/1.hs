@@ -49,3 +49,5 @@ bezElementu _ [] = []
 bezElementu e (x:xs)
     | x == e    = bezElementu e xs -- Pomijamy element
     | otherwise = x : bezElementu e xs
+
+-- minDist [(1,5),(1,1),(10,1),(-4,1)] 
