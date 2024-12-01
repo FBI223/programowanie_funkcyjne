@@ -6,6 +6,23 @@ cp perm = [k | k <- [1 ..  length perm], all (\x -> elem x (take k perm)) [1 .. 
 
 
 
+
+prefixSublists :: [a] -> [[a]]
+prefixSublists lista = foldr (\x acc -> generate x acc) [] lista
+  where
+    generate x acc = foldr (\prefix rest -> (x : prefix) : rest) [] acc ++ [[x]]
+
+prefixSublists :: [a] -> [[a]]
+prefixSublists [] = []
+prefixSublists lista = (helper lista) ++ prefixSublists (tail lista)
+
+
+helper :: [a] -> [[a]]
+helper [] = []
+helper lista = [lista] ++ helper (init lista)
+
+
+
 -- Funkcja permutacje: generuje wszystkie permutacje listy
 permutacje :: [Integer] -> [[Integer]]
 permutacje [] = [[]] -- Permutacja pustej listy to lista zawierająca pustą listę
