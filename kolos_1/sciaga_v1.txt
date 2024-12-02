@@ -1,0 +1,51 @@
+
+Ściąga z funkcjami Haskella
+Funkcje na typach podstawowych
+Funkcja	Opis	Typ	Przykład użycia	Wynik
+not	Neguje wartość logiczną.	Bool -> Bool	not True	False
+even	Sprawdza, czy liczba całkowita jest parzysta.	Int -> Bool	even 4	True
+odd	Sprawdza, czy liczba całkowita jest nieparzysta.	Int -> Bool	odd 3	True
+abs	Zwraca wartość absolutną liczby.	Num a => a -> a	abs (-5)	5
+signum	Zwraca znak liczby: -1 dla ujemnych, 0 dla zera, 1 dla dodatnich.	Num a => a -> a	signum (-7)	-1
+max	Zwraca większą z dwóch liczb.	Ord a => a -> a -> a	max 5 10	10
+min	Zwraca mniejszą z dwóch liczb.	Ord a => a -> a -> a	min 3 8	3
+succ	Zwraca następną wartość dla elementu porządkowego.	Enum a => a -> a	succ 'a'	'b'
+pred	Zwraca poprzednią wartość dla elementu porządkowego.	Enum a => a -> a	pred 10	9
+Funkcje na listach
+Funkcja	Opis	Typ	Przykład użycia	Wynik
+head	Zwraca pierwszy element listy.	[a] -> a	head [1,2,3]	1
+tail	Zwraca listę bez pierwszego elementu.	[a] -> [a]	tail [1,2,3]	[2,3]
+last	Zwraca ostatni element listy.	[a] -> a	last [1,2,3]	3
+init	Zwraca listę bez ostatniego elementu.	[a] -> [a]	init [1,2,3]	[1,2]
+length	Zwraca długość listy.	[a] -> Int	length [1,2,3]	3
+null	Sprawdza, czy lista jest pusta.	[a] -> Bool	null []	True
+reverse	Odwraca listę.	[a] -> [a]	reverse [1,2,3]	[3,2,1]
+take	Zwraca pierwsze n elementów listy.	Int -> [a] -> [a]	take 2 [1,2,3]	[1,2]
+drop	Usuwa pierwsze n elementów listy.	Int -> [a] -> [a]	drop 2 [1,2,3]	[3]
+elem	Sprawdza, czy element znajduje się na liście.	Eq a => a -> [a] -> Bool	elem 2 [1,2,3]	True
+concat	Łączy listy w jedną listę.	[[a]] -> [a]	concat [[1,2],[3,4]]	[1,2,3,4]
+zip	Łączy dwie listy w listę par.	[a] -> [b] -> [(a,b)]	zip [1,2] ['a','b']	[(1,'a'),(2,'b')]
+unzip	Rozdziela listę par na dwie listy.	[(a,b)] -> ([a],[b])	unzip [(1,'a'),(2,'b')]	([1,2],['a','b'])
+filter	Zwraca elementy listy spełniające warunek.	(a -> Bool) -> [a] -> [a]	filter even [1,2,3,4]	[2,4]
+map	Stosuje funkcję do każdego elementu listy.	(a -> b) -> [a] -> [b]	map (*2) [1,2,3]	[2,4,6]
+foldl	Składa listę od lewej z użyciem funkcji i wartości początkowej.	(b -> a -> b) -> b -> [a] -> b	foldl (+) 0 [1,2,3]	6
+foldr	Składa listę od prawej z użyciem funkcji i wartości początkowej.	(a -> b -> b) -> b -> [a] -> b	foldr (+) 0 [1,2,3]	6
+Funkcje na ciągach znaków (String)
+Funkcja	Opis	Typ	Przykład użycia	Wynik
+lines	Dzieli string na listę wierszy.	String -> [String]	lines "a\nb\nc"	["a","b","c"]
+unlines	Łączy listę wierszy w jeden string (dodaje nowe linie).	[String] -> String	unlines ["a","b","c"]	"a\nb\nc\n"
+words	Dzieli string na listę słów (na podstawie białych znaków).	String -> [String]	words "hello world"	["hello","world"]
+unwords	Łączy listę słów w jeden string (dodaje spacje).	[String] -> String	unwords ["hello","world"]	"hello world"
+isPrefixOf	Sprawdza, czy jeden string jest prefiksem drugiego.	String -> String -> Bool	"pre" isPrefixOf "prefix"	True
+Funkcje na liczbach
+Funkcja	Opis	Typ	Przykład użycia	Wynik
+div	Całkowite dzielenie dwóch liczb.	Integral a => a -> a -> a	div 7 2	3
+mod	Reszta z dzielenia dwóch liczb.	Integral a => a -> a -> a	mod 7 2	1
+gcd	Największy wspólny dzielnik dwóch liczb.	Integral a => a -> a -> a	gcd 18 24	6
+lcm	Najmniejsza wspólna wielokrotność dwóch liczb.	Integral a => a -> a -> a	lcm 4 6	12
+Inne przydatne funkcje
+Funkcja	Opis	Typ	Przykład użycia	Wynik
+id	Funkcja tożsamościowa (zwraca dokładnie to, co otrzymuje).	a -> a	id 42	42
+const	Funkcja zwracająca zawsze pierwszy argument, ignorując drugi.	a -> b -> a	const 42 "abc"	42
+flip	Odwraca kolejność argumentów funkcji dwuargumentowej.	(a -> b -> c) -> b -> a -> c	flip (/) 2 10	5
+(.)	Kompozycja funkcji (łączenie funkcji w jedną funkcję).	(b -> c) -> (a -> b) -> a -> c	(not . even) 3	True
