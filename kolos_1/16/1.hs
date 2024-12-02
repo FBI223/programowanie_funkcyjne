@@ -27,3 +27,19 @@ iteracja n napis
             kolejny_napis    = concat po_iteracji
 
 
+
+{-
+trenka 
+
+dlugosc (a:b:x) | isOnlyA (a:b:x) = 0
+                | otherwise = 1 + (dlugosc $ iter (a:b:x)) where
+    iter ('a':'b':x) = 'a':(iter x)
+    iter ('b':'a':x) = 'b':(iter x)
+    iter ('b':'b':x) = 'a':(iter x)
+    iter ('a':'a':x) = 'a':'a':'a':(iter x)
+    iter x = x
+    isOnlyA [] = True
+    isOnlyA (a:x) = (a == 'a') && (isOnlyA x)
+dlugosc _ = 0
+
+-}
