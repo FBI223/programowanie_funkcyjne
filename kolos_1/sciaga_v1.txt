@@ -1,6 +1,8 @@
 
 Ściąga z funkcjami Haskella
+
 Funkcje na typach podstawowych
+
 Funkcja	Opis	Typ	Przykład użycia	Wynik
 not	Neguje wartość logiczną.	Bool -> Bool	not True	False
 even	Sprawdza, czy liczba całkowita jest parzysta.	Int -> Bool	even 4	True
@@ -11,6 +13,7 @@ max	Zwraca większą z dwóch liczb.	Ord a => a -> a -> a	max 5 10	10
 min	Zwraca mniejszą z dwóch liczb.	Ord a => a -> a -> a	min 3 8	3
 succ	Zwraca następną wartość dla elementu porządkowego.	Enum a => a -> a	succ 'a'	'b'
 pred	Zwraca poprzednią wartość dla elementu porządkowego.	Enum a => a -> a	pred 10	9
+
 Funkcje na listach
 Funkcja	Opis	Typ	Przykład użycia	Wynik
 head	Zwraca pierwszy element listy.	[a] -> a	head [1,2,3]	1
@@ -30,6 +33,7 @@ filter	Zwraca elementy listy spełniające warunek.	(a -> Bool) -> [a] -> [a]	fi
 map	Stosuje funkcję do każdego elementu listy.	(a -> b) -> [a] -> [b]	map (*2) [1,2,3]	[2,4,6]
 foldl	Składa listę od lewej z użyciem funkcji i wartości początkowej.	(b -> a -> b) -> b -> [a] -> b	foldl (+) 0 [1,2,3]	6
 foldr	Składa listę od prawej z użyciem funkcji i wartości początkowej.	(a -> b -> b) -> b -> [a] -> b	foldr (+) 0 [1,2,3]	6
+
 Funkcje na ciągach znaków (String)
 Funkcja	Opis	Typ	Przykład użycia	Wynik
 lines	Dzieli string na listę wierszy.	String -> [String]	lines "a\nb\nc"	["a","b","c"]
@@ -43,6 +47,7 @@ div	Całkowite dzielenie dwóch liczb.	Integral a => a -> a -> a	div 7 2	3
 mod	Reszta z dzielenia dwóch liczb.	Integral a => a -> a -> a	mod 7 2	1
 gcd	Największy wspólny dzielnik dwóch liczb.	Integral a => a -> a -> a	gcd 18 24	6
 lcm	Najmniejsza wspólna wielokrotność dwóch liczb.	Integral a => a -> a -> a	lcm 4 6	12
+
 Inne przydatne funkcje
 Funkcja	Opis	Typ	Przykład użycia	Wynik
 id	Funkcja tożsamościowa (zwraca dokładnie to, co otrzymuje).	a -> a	id 42	42
