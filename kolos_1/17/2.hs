@@ -4,6 +4,13 @@ ps lista = foldl (\acc x -> acc ++ [take x lista]) [] [1..length lista]
            ++ foldr (\x acc -> (drop x lista) : acc) [] [1..length lista - 1]
 
 
+sumaPrefixowa :: [Int] -> [Int]
+sumaPrefixowa lista = scanl (+) 0 lista
+
+sumaOdPrawej :: [Int] -> [Int]
+sumaOdPrawej lista = scanr (+) 0 lista
+
+
 
 sufixy_prefixy :: [a] -> [[a]]
 sufixy_prefixy [] = []
