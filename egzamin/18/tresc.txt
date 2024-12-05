@@ -1,0 +1,25 @@
+Zadanie 1 (Haskell):
+Napisz funkcj� longr::Eq a => [a] -> (a, Int), zwracaj�c� element z listy wyst�puj�cy najwi�cej razy bezpo�rednio po sobie oraz d�ugo�� tego ci�gu. Je�li jest kilka takich element�w, to wystarczy wypisa� tylko jeden z nich.
+Przyk�ad: longr "aabbbcccab" = ('b', 3).
+ 
+Zadanie 2 (Haskell):
+Napisz funkcj� slownik::[String] -> [(String, Int)], zliczaj�c� liczb� wyst�pie� s��w w li�cie wej�ciowej i zwracaj�c� list� par (s�owo, liczba wyst�pie�) w kolejno�ci rosn�cej.
+Przyk�ad: slownik "Co ma Ala? Ala ma kota, ale nie ma psa." = [(3, "ma"), (2, "Ala"), (1, "ale"), (1, "co"), (1, "kota"), (1, "nie"), (1, "psa")]
+ 
+Zadanie 3 (Haskell):
+Napisz funkcj� odwracaj�c� list� w czasie liniowym wzgl�dem d�ugo�ci listy.
+ 
+Zadanie 4 (Haskell):
+Liczba n jest doskona�a, gdy suma jej dzielnik�w (z wy��czeniem n) wynosi n. Napisz funkcj� perfect::Integer -> Bool, kt�ra sprawdza, czy liczba jest doskona�a.
+ 
+Zadanie 5 (Erlang):
+Napisz serwer bazodanowy, kt�ry przyjmuje dwa komunikaty:
+- zapisz(klucz, warto��) - dodaje do bazy par� klucz-warto�� lub podmienia warto�� ju� istniej�cego klucza
+- odczytaj(klucz, Pid) - do procesu o identyfikatorze Pid wysy�a komunikat z warto�ci� klucza jako para {jest, warto��} lub nie_znaleziono, je�li podanego klucza nie ma w bazie
+ 
+Zadanie 6 (Erlang):
+Napisz serwer przechowuj�cy aktualny wynik oblicze� i obs�uguj�cy komunikaty:
+- dodaj N - dodaje N do aktualnego wyniku
+- pomnoz N - mno�y aktualny wynik przez N
+- wynik Pid - do procesu o identyfikatorze Pid wysy�a komunikat z aktualn� warto�ci� wyniku.
+Wynik pocz�tkowy wynosi 0.

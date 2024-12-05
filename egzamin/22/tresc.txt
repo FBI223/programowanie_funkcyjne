@@ -1,0 +1,21 @@
+
+--1 termin, egzamin PF 22/23. Aby zdać egzamin nalezy wszystkie zadania rozwiązać (minimalnie w 60% poprawnie). 
+--Egzamin jest rozwiązywany na kartkach
+ 
+--zad 1.
+--Napisać funkcję o sygnaturze cbin :: n -> [[Int]], która wypisuje wszystkie ciągi binarne o długości n, o parzystej liczbie 1
+--cbin 3 => [[0,0,0], [0,1,1], [1,0,1], [1,1,0]]
+--rozwiązania nie muszą być w powyzszej kolejnosci. 
+ 
+--zad 2.
+--napisac funkcje o sygnaturze slownik :: [String] -> [(String, Int)], ktora zlicza wystapienia kazdej litery wystepujace w zadanych stringach (chyba bez ' ' (whitespace))
+--slownik ["ala ma kota", "lol"] => [("a", 4), ("l", 3), ("m", 1), ("k", 1), ("o",2), ("t", 1)]
+--rozwiązania nie muszą być w powyzszej kolejnosci. 
+ 
+--zad 3.
+--dla drzewa binarnego zadanego przez: 
+--data Db a = Puste | Wezel a (Db a) (Db a)
+--obliczyć maksymalną wysokość drzewa (obojętnie czy zliczamy od 0 czy 1)
+ 
+--zad 4. (nie pamiętam treści)
+--Serwer bazodanowy w Erlangu z dwoma komunikatami: dodaj/zaktualizuj 
