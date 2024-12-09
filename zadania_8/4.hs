@@ -9,6 +9,23 @@
 --d list = (flip map list) . (flip (/))
 --d list = (.) (flip map list) (flip (/))
 --d list = flip (.) (flip (/)) (flip map list) 
-d  = (flip (.) (flip (/))) . (flip map ) 
+d1  = (flip (.) (flip (/))) . (flip map ) 
 
 
+
+
+-- pointfree.io
+d2 = flip (map . flip (/))
+
+
+
+
+
+--d list x = map (\y->y/x) list
+--d list x = map (\y->y/x) list
+--d list x = flip map list (\y->y/x)
+--d list = flip map list . ( flip (/))
+--d list = flip map list . ( flip (/))
+--d list =(.) (flip map list) ( flip (/))
+--d list = flip (.) ( flip (/)) (flip map list)
+--d  = (flip (.) ( flip (/))) . (flip map )
