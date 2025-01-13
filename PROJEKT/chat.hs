@@ -1,51 +1,43 @@
-import System.IO
 
--- :set args "C:\\Users\\msztu\\Documents\\haskell_projects\\PF\\programowanie_funkcyjne\\PROJEKT\\mystery"
+----------------------------------------------------------
+solveCryptharithm :: String -> (Int -> Int -> Int) -> [String] -> Maybe [(Char, Char)]
+solveCryptharithm linia operacja zdanie = go unikalneLitery "0123456789" []
+  where
+    -- Wyciągnięcie unikalnych liter
+    unikalneLitery = uniqueCharacters linia
 
--- "KTO + KOT = TOK"
--- "TRZY + TRZY = SZESC"
--- "GRAD + DESZCZ = STRATA"
--- "KOGUT + KURA = JAJKO"
--- "LUK + LUK = KOLO"
--- "CHMURA + CHMURA = DESZCZ"
--- "KIOTO + OSAKA = TOKIO"
--- "REBUS * I = SUDOKU"
--- "WILK + UNIKA = LUDZI"
---
--- "USA + USSR = PEACE"
--- "Send + More = MONEY"
---
--- "ZERO + ZERO = JEDEN"
--- "POL + POL = CALA"
--- "ROZUM - DUZO = MOZE"
--- "TEST + JEST = SUPER"
--- "DOM * DOM = MIASTO"
--- "KWARTA + KWARTA = POLOWA"
--- "BLAD + BLAD = GAUSS"
--- 
--- "BUM + BUM + BUM = DUD"
--- "OLD + OLD + OLD = GOOD"
--- "BYE + BYE + BYE + BYE + BYE + BYE = RAY"
--- "TED + HAS + GOOD = TASTE"
--- "LYNNE + LOOKS = SLEEPY"
--- "NOTICE + NICE = PRICES"
--- "LEAH + LOVES = RUSSIA"
--- ""
+    -- Funkcja rekurencyjna do generowania kombinacji i sprawdzania
+    go :: [Char] -> [Char] -> [(Char, Char)] -> Maybe [(Char, Char)]
+    go [] _ przypisanie = if isValid przypisanie then Just przypisanie else Nothing
+    go (litera:resztaLiter) cyfry przypisanie =
+        case cyfry of
+            [] -> Nothing
+            _  -> foldr (\cyfra acc ->
+                            case acc of
+                                Just _ -> acc  -- Jeśli znaleziono rozwiązanie, zakończ rekursję
+                                Nothing ->
+                                    let nowePrzypisanie = przypisanie ++ [(litera, cyfra)]
+                                    in go resztaLiter (filter (/= cyfra) cyfry) nowePrzypisanie
+                        ) Nothing cyfry
+
+    -- Funkcja sprawdzająca warunki dla danego przypisania
+    isValid :: [(Char, Char)] -> Bool
+    isValid przypisanie =
+        let equation = convertEquation (changeSentenceIntoEquation zdanie przypisanie)
+        in checkEquation equation operacja
 
 
+main :: IO ()
+main = do
+    let zdanie = "TED + HAS + GOOD = TASTE"
+    let operacja = add
+    let wynik = solveCryptharithm zdanie operacja (splitEquation zdanie)
+    print wynik
 
---  "TED + HAS + GOOD = TASTE"
---   134   605   9774   10513
--- [('T','1'),('E','3'),('D','4'),('H','6'),('A','0'),('S','5'),('G','9'),('O','7')]
-
---cryptharithmRecursive [[('A','1'),('B','2')],[('A','3'),('B','4')]] ["ABAB","AA" , "BB"]
+-----------------------------------------------------------------------------
 
 
 
---ghci> cryptharithmsSolver "TED + HAS + GOOD = TASTE"
---[134,605,9774,10513]
---ghci> cryptharithmsSolver "LEAH + LOVES = RUSSIA"   
---[9325,98437,107762]
 
 zipWithEach :: [b] -> [[a]] -> [[ (b, a) ]]
 zipWithEach bs listOfLists = map (zip bs) listOfLists
@@ -60,7 +52,7 @@ allPossibilities linia = wszystkie_mozliwosci_przypisan
 
     permutacjeLiczb 
               |   ileLiter < 10   = knPermutations "0123456789" ileLiter
-              |        otherwise  = permutations   "0123456789"
+              |        otherwise  = permutations  "0123456789"
     
     wszystkie_mozliwosci_przypisan = zipWithEach unikalneLitery permutacjeLiczb
 
@@ -72,9 +64,8 @@ cryptharithmsSolver linia = wynik
     rozbite_zdanie = splitEquation linia 
     operacja 
         | elem '*' linia = mult
-        | elem '-' linia = sub
-        | elem '+' linia = add
-        |otherwise = add
+        | elem '/' linia = sub
+        | otherwise = add
   
     wynik =  cryptharithmRecursive wszystkie_dopasowania operacja rozbite_zdanie
 
@@ -102,18 +93,16 @@ checkEquation xs op = foldl op (head initList) (tail initList) == last xs
 
 
 convertEquation :: [String] -> [Int]
-convertEquation strs
-  | all isValidStringNumber strs = map stringToInt strs
-  | otherwise              = []
-
-
-
-isValidStringNumber :: String -> Bool
-isValidStringNumber num
-    | null num           = False
-    | length num == 1    = True  
-    | head num == '0'    = False 
-    | otherwise          = True
+convertEquation [] = []
+convertEquation (x:xs)
+    | isValidNumber x = stringToInt x : convertEquation xs
+    | otherwise       = []  
+  where
+    isValidNumber num
+        | null num           = False
+        | length num == 1    = True  
+        | head num == '0'    = False 
+        | otherwise          = True
 
 
 add :: Int -> Int -> Int
@@ -180,3 +169,5 @@ toUpper c
   | c >= 'a' && c <= 'z' = toEnum (fromEnum c - 32)
   | c >= 'A' && c <= 'Z' = c
   | otherwise = ' '  
+
+
