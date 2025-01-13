@@ -63,6 +63,21 @@ import System.Environment
 
 
 
+changeSentenceIntoEquation :: [String] -> [ (Char, Char) ] -> [String]
+changeSentenceIntoEquation [] _ = [] 
+changeSentenceIntoEquation (x:xs) slownik = changeWordIntoNumber x slownik : changeSentenceIntoEquation xs slownik
+
+
+changeWordIntoNumber :: String -> [ (Char, Char) ] -> String
+changeWordIntoNumber [] _ = [] 
+changeWordIntoNumber (x:xs) slownik = changeLetterIntoDigit x slownik : changeWordIntoNumber xs slownik
+
+changeLetterIntoDigit :: Char ->  [ (Char, Char) ] -> Char
+changeLetterIntoDigit c slownik = snd $ head $ filter (\(a,b) -> a == c) slownik
+  where
+    przypisanie = filter (\(a,b) -> a == c) slownik
+
+
 allPossibilities :: String -> [[ (Char, Char) ]]
 allPossibilities linia = zipWithEach unikalneLitery permutacjeLiczb
   where
