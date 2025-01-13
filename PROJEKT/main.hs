@@ -83,13 +83,32 @@ allPossibilities linia = zipWithEach unikalneLitery permutacjeLiczb
   where
     unikalneLitery = uniqueCharacters linia
     ileLiter = length unikalneLitery
-    permutacjeLiczb = kPermutations "0123456789" ileLiter
+
+    permutacjeLiczb 
+              |   ileLiter < 10   = knPermutations "0123456789" ileLiter
+              |        otherwise  = permutations  "0123456789"
 
 
-kPermutations :: (Eq a) => [a] -> Int -> [[a]]
-kPermutations [] _ = []
-kPermutations _ 0 = [[]]
-kPermutations zbior k = [x : ys | x <- zbior, ys <- kPermutations (filter (/= x) zbior) (k - 1) ]
+permutations :: (Eq a) => [a] -> [[a]]
+permutations [] = [[]]  -- Base case: a single empty permutation for an empty list
+permutations zbior = [x : ys | x <- zbior, ys <- permutations (filter (/= x) zbior)]
+
+-- [x : ys | x <- zbior, x /= '0' || null ys, ys <- knPermutations (filter (/= x) zbior) (k - 1)]
+
+
+--knPermutations :: (Eq a) => [a] -> Int -> [[a]]
+--knPermutations [] _ = []
+--knPermutations _ 0 = [[]]
+--knPermutations zbior k = [x : ys | x <- zbior, ys <- knPermutations (filter (/= x) zbior) (k - 1)]
+
+
+knPermutations :: [Char] -> Int -> [[Char]]
+knPermutations [] _ = []
+knPermutations _ 0 = [[]]
+knPermutations zbior k = 
+    [x : ys | x <- zbior, ys <- knPermutations (filter (/= x) zbior) (k - 1), x /= '0' || null ys]
+
+
 
 
 zipWithEach :: [b] -> [[a]] -> [[ (b, a) ]]
