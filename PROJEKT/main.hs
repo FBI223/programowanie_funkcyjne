@@ -1,51 +1,24 @@
 import System.IO
+import System.Environment; -- dla funkcji getArgs
 
 -- :set args "C:\\Users\\msztu\\Documents\\haskell_projects\\PF\\programowanie_funkcyjne\\PROJEKT\\mystery"
 
--- "KTO + KOT = TOK"
--- "TRZY + TRZY = SZESC"
--- "GRAD + DESZCZ = STRATA"
--- "KOGUT + KURA = JAJKO"
--- "LUK + LUK = KOLO"
--- "CHMURA + CHMURA = DESZCZ"
--- "KIOTO + OSAKA = TOKIO"
--- "REBUS * I = SUDOKU"
--- "WILK + UNIKA = LUDZI"
---
--- "USA + USSR = PEACE"
--- "Send + More = MONEY"
---
--- "ZERO + ZERO = JEDEN"
--- "POL + POL = CALA"
--- "ROZUM - DUZO = MOZE"
--- "TEST + JEST = SUPER"
--- "DOM * DOM = MIASTO"
--- "KWARTA + KWARTA = POLOWA"
--- "BLAD + BLAD = GAUSS"
--- 
--- "BUM + BUM + BUM = DUD"
--- "OLD + OLD + OLD = GOOD"
--- "BYE + BYE + BYE + BYE + BYE + BYE = RAY"
--- "TED + HAS + GOOD = TASTE"
--- "LYNNE + LOOKS = SLEEPY"
--- "NOTICE + NICE = PRICES"
--- "LEAH + LOVES = RUSSIA"
--- ""
+
+main :: IO ()
+main = do
+
+    contents <- readFile "in"
+    
+    let linie = lines contents
+    
+    let wyniki = map cryptharithmsSolver linie
+    
+    writeFile "out" (unlines (map show wyniki))
+    
+    mapM_ (putStrLn . show) wyniki
 
 
 
---  "TED + HAS + GOOD = TASTE"
---   134   605   9774   10513
--- [('T','1'),('E','3'),('D','4'),('H','6'),('A','0'),('S','5'),('G','9'),('O','7')]
-
---cryptharithmRecursive [[('A','1'),('B','2')],[('A','3'),('B','4')]] ["ABAB","AA" , "BB"]
-
-
-
---ghci> cryptharithmsSolver "TED + HAS + GOOD = TASTE"
---[134,605,9774,10513]
---ghci> cryptharithmsSolver "LEAH + LOVES = RUSSIA"   
---[9325,98437,107762]
 
 zipWithEach :: [b] -> [[a]] -> [[ (b, a) ]]
 zipWithEach bs listOfLists = map (zip bs) listOfLists
