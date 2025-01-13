@@ -1,5 +1,6 @@
 import System.IO
 import System.Environment
+import Text.Read (readMaybe)
 
 -- :set args "C:\\Users\\msztu\\Documents\\haskell_projects\\PF\\programowanie_funkcyjne\\PROJEKT\\mystery"
 
@@ -59,8 +60,26 @@ import System.Environment
 -- ""
 
 
+--cryptharithmRecursive [[('A','1'),('B','2')],[('A','3'),('B','4')]] ["ABAB","AA" , "BB"]
 
 
+cryptharithmRecursive :: [[ (Char, Char) ]] -> [String] -> [[String]]
+cryptharithmRecursive [] _ = []
+cryptharithmRecursive _ [] = []
+cryptharithmRecursive (mini_slownik : reszta_slownika) zdanie =  przeksztalcone_zdanie : cryptharithmRecursive reszta_slownika zdanie
+  where
+    przeksztalcone_zdanie = changeSentenceIntoEquation zdanie mini_slownik
+
+
+cryptharithmsSolver :: String -> [[String]]
+cryptharithmsSolver linia = cryptharithmRecursive wszystkie_dopasowania rozbite_zdanie
+  where
+    wszystkie_dopasowania = allPossibilities linia
+    rozbite_zdanie = splitEquation linia 
+
+
+safeStringToInt :: String -> Maybe Int
+safeStringToInt str = readMaybe str
 
 
 changeSentenceIntoEquation :: [String] -> [ (Char, Char) ] -> [String]
@@ -90,11 +109,12 @@ allPossibilities linia = zipWithEach unikalneLitery permutacjeLiczb
 
 
 permutations :: (Eq a) => [a] -> [[a]]
-permutations [] = [[]]  -- Base case: a single empty permutation for an empty list
+permutations [] = [[]] 
 permutations zbior = [x : ys | x <- zbior, ys <- permutations (filter (/= x) zbior)]
 
--- [x : ys | x <- zbior, x /= '0' || null ys, ys <- knPermutations (filter (/= x) zbior) (k - 1)]
 
+
+-- [x : ys | x <- zbior, x /= '0' || null ys, ys <- knPermutations (filter (/= x) zbior) (k - 1)]
 
 --knPermutations :: (Eq a) => [a] -> Int -> [[a]]
 --knPermutations [] _ = []
