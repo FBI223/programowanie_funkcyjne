@@ -1,20 +1,13 @@
+--Marcin Sztukowski
+
 import System.IO
-import System.Environment; -- dla funkcji getArgs
-
--- :set args "C:\\Users\\msztu\\Documents\\haskell_projects\\PF\\programowanie_funkcyjne\\PROJEKT\\mystery"
-
 
 main :: IO () 
 main = do 
-
     contents <- readFile "in2" -- wczytywanie zawartosci pliku do zmiennej contents
-    
     let linie = lines contents -- rozdziela caly tekst na liste wierszy
-    
     let wyniki = map cryptharithmsSolver linie -- przetwarzanie kazdej linii poprzez map
-    
     writeFile "out2" (unlines (map show wyniki)) -- zapisanie do pliku ciagi znakow
-    
     mapM_ (putStrLn . show) wyniki -- wypisanie wynikow na ekran
 
 
