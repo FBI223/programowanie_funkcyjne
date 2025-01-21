@@ -3,7 +3,7 @@
 liczbaEulera :: Int -> Double
 --liczbaEulera n = foldl (+) 0.0  ( map (\x -> jedynka/(fromIntegral (foldl (*) 1 ( flip take [1..] n )))  ) (flip take [1..] n ) )
 --liczbaEulera = foldl (+) 0.0  ( map (\x -> jedynka/ (fromIntegral  factorial x)  ) . (flip take [1..]  ) )
-liczbaEulera = foldl (+) 0.0  ( map (\x -> (1 /) . fromIntegral .  factorial x ) . (flip take [1..]  ) )
+liczbaEulera = foldl (+) 0.0 . ( map  . (1 /) . fromIntegral .  factorial   . (flip take [1..]  ) )
 
 
 -- point free io 
