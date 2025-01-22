@@ -4,12 +4,12 @@ import System.IO
 
 main :: IO () 
 main = do 
-    contents <- readFile "in" -- wczytywanie zawartosci pliku do zmiennej contents
+    contents <- readFile "in2" -- wczytywanie zawartosci pliku do zmiennej contents
     let linie = lines contents -- rozdziela caly tekst na liste wierszy ( odwrotnosc ulines )
     let wyniki = map cryptharithmsSolver linie -- przetwarzanie kazdej linii poprzez map
     let operatory_wyniki = map whichOperator linie -- operatory pokolei kazdego rownania 
     let resultsFormatted = zipWith formatting wyniki operatory_wyniki -- zipuje [ [1,2,3] , [4,5,6] ] wraz z [+ , *] itd i potem wykonuje   formatting [int] char -> string
-    writeFile "out" (unlines resultsFormatted) -- unlines bierze tablice i pomiedzy elementami wstawia \n miedzy tymi znakami i konwertuje na string 
+    writeFile "out2" (unlines resultsFormatted) -- unlines bierze tablice i pomiedzy elementami wstawia \n miedzy tymi znakami i konwertuje na string 
     putStrLn (unlines resultsFormatted) 
 
 
