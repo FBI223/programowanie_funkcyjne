@@ -4,11 +4,33 @@ import System.IO
 
 main :: IO () 
 main = do 
-    contents <- readFile "in2" -- wczytywanie zawartosci pliku do zmiennej contents
-    let linie = lines contents -- rozdziela caly tekst na liste wierszy
+    contents <- readFile "in" -- wczytywanie zawartosci pliku do zmiennej contents
+    let linie = lines contents -- rozdziela caly tekst na liste wierszy ( odwrotnosc ulines )
     let wyniki = map cryptharithmsSolver linie -- przetwarzanie kazdej linii poprzez map
-    writeFile "out2" (unlines (map show wyniki)) -- zapisanie do pliku ciagi znakow
-    mapM_ (putStrLn . show) wyniki -- wypisanie wynikow na ekran
+    let operatory_wyniki = map whichOperator linie -- operatory pokolei kazdego rownania 
+    let resultsFormatted = zipWith formatting wyniki operatory_wyniki -- zipuje [ [1,2,3] , [4,5,6] ] wraz z [+ , *] itd i potem wykonuje   formatting [int] char -> string
+    writeFile "out" (unlines resultsFormatted) -- unlines bierze tablice i pomiedzy elementami wstawia \n miedzy tymi znakami i konwertuje na string 
+    putStrLn (unlines resultsFormatted) 
+
+
+
+-- formatujemy nasz wynik w postaci [int] na   x + y + z ... = wynik_rownania   
+formatting :: [Int] -> Char -> String
+formatting [] _ = "brak rozwiazania"
+formatting [x] _ = " = " ++ show x
+formatting [x,y] op = show x ++ " = " ++ show y --2 elementy
+formatting (x:y:z:xs) op -- przynajmniej 3 elmenty
+  | xs == []   = show x ++ " " ++ [op] ++ " " ++ show y ++ " = " ++ show z
+  | otherwise = show x ++ " " ++ [op] ++ " " ++ show y ++ " " ++ [op] ++ " " ++ show z ++ " " ++ formatting xs op
+
+
+-- ktorym operatorem sie poslugujemy w rownaniu
+whichOperator :: String -> Char
+whichOperator linia
+  | elem '*' linia = '*'
+  | elem '-' linia = '-'
+  | elem '+' linia = '+'
+  | otherwise = '+'
 
 
 -- glowna funkcja
@@ -26,6 +48,7 @@ cryptharithmsSolver linia = wynik
         |otherwise = add
   
     wynik =  cryptharithmRecursive wszystkie_dopasowania operacja rozbite_zdanie
+
 
 
 
