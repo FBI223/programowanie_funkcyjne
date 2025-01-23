@@ -69,11 +69,9 @@ cryptharithmRecursive (mini_slownik : reszta_slownika) operacja zdanie -- dla ka
 -- sprawdzamy czy nasze rownanie LEWA == PRAWA , dla podanej operacji arytmetycznej
 
 checkEquation :: [Int] -> (Int -> Int -> Int) -> Bool
-checkEquation [] _ = False -- pomin
-checkEquation [_] _ = False -- pomin
-checkEquation xs op = foldl op (head initList) (tail initList) == last xs
-  where -- wykonujemy operacje od lewej do prawej , ale bez ostatniego elementu listy bo to nasz wynik operacji
-    initList = init xs -- lista bez ostatniego elementu
+checkEquation []  _ = False
+checkEquation [_] _ = False
+checkEquation xs op = foldl1 op (init xs) == last xs
 
 
  -- kowertujemy wszystkie liczby w postaci string w equation na int
